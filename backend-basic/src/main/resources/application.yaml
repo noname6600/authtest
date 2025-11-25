@@ -1,0 +1,38 @@
+server:
+  port: ${PORT:8082}
+
+spring:
+  datasource:
+    url: ${MASTER_DATABASE_URL:jdbc:mysql://localhost:3306/inittest}
+    username: ${MASTER_DATABASE_USER:root}
+    password: ${MASTER_DATABASE_PWD:123456}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USER:a}
+    password: ${MAIL_PASSWORD:a}
+    properties:
+      debug: false
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+common:
+  security:
+    cors:
+      allowed-origins: "${CORS_ORIGINS:http://localhost}"
+      allowed-methods: "${CORS_METHODS:GET,POST,PUT,DELETE}"
+      allowed-headers: "${CORS_HEADERS:*}"
+
+app:
+  frontend:
+    reset-password-url: "${RESET_LINK:http://localhost:80}"

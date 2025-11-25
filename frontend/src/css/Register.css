@@ -1,0 +1,123 @@
+/*  Container  */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;      
+  padding: 0;             
+  box-sizing: border-box;
+  background: #f0f2f5;
+  font-family: Arial, sans-serif;
+}
+
+/*  Box  */
+.register-box {
+  width: 100%;
+  max-width: 500px;        
+  padding: 40px 30px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/*  Title  */
+.register-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/*  Inputs  */
+.register-input {
+  width: 90%;              
+  max-width: 450px;
+  padding: 14px 15px;
+  margin: 0 auto 15px;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+.register-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/*  Submit button  */
+.register-button {
+  width: 90%;
+  max-width: 450px;
+  padding: 14px;
+  margin: 0 auto 10px;
+  display: block;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.2s;
+}
+
+.register-button:hover {
+  background: #0056b3;
+}
+
+/*  Messages */
+.register-message {
+  color: green;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.register-error {
+  color: #e74c3c;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+/* Back button  */
+.back-button {
+  width: 90%;
+  max-width: 450px;
+  padding: 14px;
+  margin: 15px auto 0;
+  display: block;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.back-button:hover {
+  background: #5a6268;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .register-box {
+    padding: 30px 20px;
+  }
+
+  .register-title {
+    font-size: 26px;
+  }
+
+  .register-input,
+  .register-button,
+  .back-button {
+    width: 95%;
+    max-width: none;
+    font-size: 16px;
+  }
+}

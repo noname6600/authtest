@@ -1,0 +1,80 @@
+version: "3.9"
+
+services:
+  nginx-proxy:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    ports:
+      - "81:80"  
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - frontend-nginx
+      - backend-basic
+      - backend-jwt
+    networks:
+      - auth-net
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8
+    container_name: auth-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_DATABASE: auth
+      MYSQL_ROOT_HOST: "%"
+    volumes:
+      - auth-mysql:/var/lib/mysql
+    networks:
+      - auth-net
+    restart: unless-stopped
+
+  backend-jwt:
+    build:
+      context: ./backend-jwt
+    container_name: auth-backend-jwt
+    environment:
+      PORT: 8081
+      MASTER_DATABASE_URL: jdbc:mysql://mysql:3306/auth
+      MASTER_DATABASE_USER: root
+      MASTER_DATABASE_PWD: 123456
+      CORS_ORIGINS: "http://basicauth.nani.id.vn:81"
+    expose:
+      - "8081"
+    networks:
+      - auth-net
+    restart: unless-stopped
+
+  backend-basic:
+    build:
+      context: ./backend-basic
+    container_name: auth-backend-basic
+    environment:
+      PORT: 8082
+      MASTER_DATABASE_URL: jdbc:mysql://mysql:3306/auth
+      MASTER_DATABASE_USER: root
+      MASTER_DATABASE_PWD: 123456
+      CORS_ORIGINS: "http://basicauth.nani.id.vn:81"
+    expose:
+      - "8082"
+    networks:
+      - auth-net
+    restart: unless-stopped
+
+  frontend-nginx:
+    image: nginx:alpine
+    container_name: auth-frontend-nginx
+    volumes:
+      - frontend-dist:/usr/share/nginx/html:ro
+    expose:
+      - "80"
+    networks:
+      - auth-net
+    restart: unless-stopped
+
+networks:
+  auth-net:
+
+volumes:
+  auth-mysql:
+  frontend-dist:

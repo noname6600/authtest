@@ -1,0 +1,91 @@
+/* Container centering */
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f0f2f5;
+  font-family: Arial, sans-serif;
+  padding: 1rem;
+}
+
+/* Box styling */
+.home-box {
+  background: white;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 450px;  
+  text-align: center;
+}
+
+/* Title */
+.home-title {
+  margin-bottom: 2.5rem;
+  color: #333;
+  font-weight: 700;
+  font-size: 8vw;   
+  line-height: 1.2;
+}
+
+@media (min-width: 500px) {
+  .home-title {
+    font-size: 36px; 
+  }
+}
+
+@media (min-width: 900px) {
+  .home-title {
+    font-size: 48px; 
+  }
+}
+
+/* Buttons container */
+.home-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Buttons styling */
+.home-button {
+  flex: 1 1 45%;      
+  padding: 1.2rem 0;   
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 5vw;      
+  font-weight: 600;
+  color: white;
+  transition: background 0.2s;
+}
+
+@media (min-width: 500px) {
+  .home-button {
+    font-size: 20px;  
+  }
+}
+
+@media (min-width: 900px) {
+  .home-button {
+    font-size: 24px;  
+  }
+}
+
+.home-button.jwt {
+  background: #007bff;
+}
+
+.home-button.jwt:hover {
+  background: #0056b3;
+}
+
+.home-button.basic {
+  background: #6c757d;
+}
+
+.home-button.basic:hover {
+  background: #5a6268;
+}

@@ -1,0 +1,98 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.profile-card {
+  width: 450px;
+  background: white;
+  padding: 32px;
+  border-radius: 14px;
+  box-shadow: 0px 4px 14px rgba(0,0,0,0.12);
+  position: relative;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.top-right-btn {
+  background: #007bff;
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.profile-field label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.profile-field input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: border-color 0.2s ease;
+}
+
+.profile-field input:disabled {
+  background: #f4f4f4;
+  color: #666;
+}
+
+.profile-field input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.profile-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.primary-btn,
+.secondary-btn,
+.danger-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary-btn {
+  background: #007bff;
+  color: white;
+}
+
+.secondary-btn {
+  background: #ddd;
+}
+
+.danger-btn {
+  background: #d9534f;
+  color: white;
+}
+
+.profile-message {
+  margin-top: 5px;
+  color: green;
+  font-weight: 500;
+}
