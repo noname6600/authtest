@@ -23,4 +23,4 @@ WORKDIR /output
 COPY --from=build /app/dist ./dist
 
 # Khi chạy container, copy dist ra volume ngoài
-CMD ["sh", "-c", "mkdir -p /frontend-dist && cp -r /output/dist/* /frontend-dist/"]
+CMD ["sh", "-c", "mkdir -p /frontend-auth-dist && cp -r /output/dist/* /frontend-auth-dist/"]
