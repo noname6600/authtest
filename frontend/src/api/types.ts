@@ -4,6 +4,17 @@ export interface ApiResponse<T> {
   message: string;
 }
 
+export interface ApiResponseList<T> {
+  success: boolean;
+  message: string | null;  
+  data: T[];             
+  page: number;
+  size: number;
+  totalPages: number;
+}
+
+type OrderStatus = "N" | "C" | "A";
+
 export interface LoginData {
   token?: string;
   name: string;
@@ -19,4 +30,18 @@ export interface UserData {
 export interface ChangePasswordData {
   oldPassword: string;
   newPassword: string;
+}
+
+export interface Order {
+  id: number;
+  userId: number;
+  product: string;
+  deliveryDate: string;
+  status: OrderStatus;
+}
+
+export interface OrderForm {
+  product: string;
+  deliveryDate: string;
+  status: OrderStatus;
 }

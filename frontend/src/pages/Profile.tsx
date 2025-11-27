@@ -57,6 +57,10 @@ export default function Profile() {
     navigate("/login");
   };
 
+  const goToOrders = () => {
+    navigate("/orders");
+  };
+
   return (
     <div className="profile-container">
       <div className="profile-card">
@@ -65,12 +69,21 @@ export default function Profile() {
           <h2>Profile</h2>
 
           {!editMode && (
-            <button
-              className="top-right-btn"
-              onClick={() => navigate("/change-password")}
-            >
-              Change Password
-            </button>
+            <div className="header-buttons">
+              <button
+                className="top-right-btn"
+                onClick={() => navigate("/change-password")}
+              >
+                Change Password
+              </button>
+
+              <button
+                className="top-right-btn"
+                onClick={goToOrders}
+              >
+                Order
+              </button>
+            </div>
           )}
         </div>
 
@@ -108,13 +121,26 @@ export default function Profile() {
         <div className="profile-buttons">
           {!editMode ? (
             <>
-              <button className="primary-btn" onClick={handleEdit}>Edit</button>
-              <button className="danger-btn" onClick={logout}>Logout</button>
+              <button className="primary-btn" onClick={handleEdit}>
+                Edit
+              </button>
+
+              <button className="primary-btn" onClick={goToOrders}>
+                Order
+              </button>
+
+              <button className="danger-btn" onClick={logout}>
+                Logout
+              </button>
             </>
           ) : (
             <>
-              <button className="primary-btn" onClick={handleSave}>Save</button>
-              <button className="secondary-btn" onClick={handleCancel}>Cancel</button>
+              <button className="primary-btn" onClick={handleSave}>
+                Save
+              </button>
+              <button className="secondary-btn" onClick={handleCancel}>
+                Cancel
+              </button>
             </>
           )}
         </div>

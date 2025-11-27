@@ -6,6 +6,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Profile from "./pages/Profile";
 import ChangePassword from "./pages/ChangePassword";
+import OrderPage from "./pages/Order";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route path="/profile" element={<Profile />} />
+        <Route path="/orders" element={<OrderPage />} />
         <Route path="/change-password" element={<ChangePassword />} />
 
         <Route path="*" element={<Navigate to="/" />} />

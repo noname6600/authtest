@@ -1,26 +1,24 @@
-# ===== Stage 1: Build frontend =====
+# ===== Stage 1: Build FE =====
 FROM node:22 AS build
 WORKDIR /app
 
-# Copy package files
+# Copy package.json + lock
 COPY package.json package-lock.json ./
-
-# Cài dependencies
 RUN npm install
 
-# Copy toàn bộ source + env
+# Copy toàn bộ source
 COPY . .
-COPY .env .env
 
 # Build production
 RUN npm run build
 
-# ===== Stage 2: Export dist =====
-FROM alpine:latest
-WORKDIR /output
+# ===== Stage 2: Serve bằng nginx =====
+FROM nginx:alpine
+# Copy dist từ stage build vào thư mục nginx serve
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy toàn bộ thư mục dist từ stage build
-COPY --from=build /app/dist ./dist
+# Expose port 80
+EXPOSE 80
 
-# Khi chạy container, copy dist ra volume ngoài
-CMD ["sh", "-c", "mkdir -p /frontend-auth-dist && cp -r /output/dist/* /frontend-auth-dist/"]
+# Run nginx
+CMD ["nginx", "-g", "daemon off;"]

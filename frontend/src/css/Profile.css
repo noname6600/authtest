@@ -20,6 +20,11 @@
   margin-bottom: 25px;
 }
 
+.header-buttons {
+  display: flex;
+  gap: 12px;
+}
+
 .top-right-btn {
   background: #007bff;
   border: none;

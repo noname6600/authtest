@@ -6,11 +6,11 @@ services:
     image: nginx:alpine
     container_name: nginx-auth-proxy
     ports:
-      - "80:80"  # host port 81 -> container port 80
+      - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
-      - frontend-nginx
+      - frontend
       - backend-basic
       - backend-jwt
     networks:
@@ -24,6 +24,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "123456"
       MYSQL_DATABASE: auth
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456
       MYSQL_ROOT_HOST: "%"
     volumes:
       - auth-mysql:/var/lib/mysql
@@ -41,9 +43,8 @@ services:
       MASTER_DATABASE_URL: jdbc:mysql://mysql:3306/auth
       MASTER_DATABASE_USER: root
       MASTER_DATABASE_PWD: 123456
-      CORS_ORIGINS: "http://basicauth.nani.id.vn:81"
-      RESET_LINK: "http://basicauth.nani.id.vn:81"
-
+      CORS_ORIGINS: "http://basicauth.nani.id.vn"
+      RESET_LINK: "http://basicauth.nani.id.vn"
       MAIL_HOST: smtp.gmail.com
       MAIL_PORT: 587
       MAIL_USERNAME: chieng6600@gmail.com
@@ -66,9 +67,8 @@ services:
       MASTER_DATABASE_URL: jdbc:mysql://mysql:3306/auth
       MASTER_DATABASE_USER: root
       MASTER_DATABASE_PWD: 123456
-      CORS_ORIGINS: "http://basicauth.nani.id.vn:81"
-      RESET_LINK: "http://basicauth.nani.id.vn:81"
-
+      CORS_ORIGINS: "http://basicauth.nani.id.vn"
+      RESET_LINK: "http://basicauth.nani.id.vn"
       MAIL_HOST: smtp.gmail.com
       MAIL_PORT: 587
       MAIL_USERNAME: chieng6600@gmail.com
@@ -82,11 +82,10 @@ services:
     restart: unless-stopped
 
   # === Frontend ===
-  frontend-nginx:
-    image: nginx:alpine
-    container_name: auth-frontend-nginx
-    volumes:
-      - frontend-auth-dist:/usr/share/nginx/html:ro
+  frontend:
+    build:
+      context: ./frontend
+    container_name: auth-frontend
     expose:
       - "80"
     networks:
@@ -100,4 +99,3 @@ networks:
 # === Volumes ===
 volumes:
   auth-mysql:
-  frontend-auth-dist:
