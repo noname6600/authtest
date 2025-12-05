@@ -43,3 +43,7 @@ management:
   endpoint:
     gateway:
       enabled: true
+
+key:
+  rotation-ms: "${KEY_ROTATION_MS:120000}"
+  jwt-expiration-ms: "${JWT_EXPIRATION_MS:180000}"

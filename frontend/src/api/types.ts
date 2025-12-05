@@ -13,7 +13,7 @@ export interface ApiResponseList<T> {
   totalPages: number;
 }
 
-type OrderStatus = "N" | "C" | "A";
+export type OrderStatus = "N" | "C" | "A";
 
 export interface LoginData {
   token?: string;

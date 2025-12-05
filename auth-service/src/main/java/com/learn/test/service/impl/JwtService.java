@@ -1,58 +1,71 @@
 package com.learn.test.service.impl;
 
 import com.learn.test.entity.User;
+import com.learn.test.module.KeyRecord;
 import com.learn.test.service.IJwtService;
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.security.KeyFactory;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
+import java.security.*;
+import java.time.Instant;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService implements IJwtService {
-    private final String jwtSecret = "ZW1jaGl1dGh1YWFuaG9pcGhhbm5heWVtY2h1YW11YWt5YmFvZ2lvaHVodWh1Y2FubGxhbXN1dGF1aGFp";
-    private final long jwtExpirationMs = 86400000;
 
-    private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
-    }
+    private final KeyManager keyManager;
 
+
+    @Override
     public String generateToken(User user) {
+        KeyRecord key = keyManager.getCurrentKey();
+
+        Instant now = Instant.now();
+        Instant exp = now.plusMillis(keyManager.getJwtExpirationMs());
+
         return Jwts.builder()
                 .setSubject(user.getAccount().getEmail())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS512)
+                .claim("uid", user.getId().toString())
+                .setIssuedAt(Date.from(now))
+                .setExpiration(Date.from(exp))
+                .setHeaderParam("kid", key.getKid())
+                .signWith(key.getPrivateKey(), SignatureAlgorithm.RS256)
                 .compact();
     }
 
+    @Override
     public String getUserNameFromToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        return parseToken(token).getBody().getSubject();
     }
 
+    @Override
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder()
-                    .setSigningKey(getSigningKey())
-                    .build()
-                    .parseClaimsJws(token);
+            parseToken(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
     }
+
+    private Jws<Claims> parseToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKeyResolver(new SigningKeyResolverAdapter() {
+                    @Override
+                    public Key resolveSigningKey(JwsHeader header, Claims claims) {
+                        String kid = header.getKeyId();
+                        KeyRecord key = keyManager.getByKid(kid);
+
+                        if (key == null) {
+                            throw new JwtException("Unknown KID: " + kid);
+                        }
+
+                        return key.getPublicKey();
+                    }
+                })
+                .build()
+                .parseClaimsJws(token);
+    }
 }
+

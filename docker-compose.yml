@@ -89,6 +89,8 @@ services:
       MAIL_USER: chieng6600@gmail.com
       MAIL_PASSWORD: krpkjexzucnqmyep
       RESET_LINK: http://basicauth.nani.id.vn
+      KEY_ROTATION_MS: 120000
+      JWT_EXPIRATION_MS: 180000
 
   # ============================================
   # === Order-Service ===
