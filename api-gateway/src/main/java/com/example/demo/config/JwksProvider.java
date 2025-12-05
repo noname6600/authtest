@@ -4,6 +4,7 @@ import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -15,15 +16,14 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.nimbusds.jose.jwk.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwksProvider {
 
-    private static final Logger log = LoggerFactory.getLogger(JwksProvider.class);
 
     private final WebClient.Builder webClient;
 

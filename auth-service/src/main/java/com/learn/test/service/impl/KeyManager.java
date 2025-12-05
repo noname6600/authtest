@@ -4,9 +4,11 @@ import com.learn.test.entity.KeyEntity;
 import com.learn.test.exception.ResourceNotFoundException;
 import com.learn.test.module.KeyRecord;
 import com.learn.test.repository.KeyRepository;
+import com.learn.test.service.IKeyManager;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,8 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class KeyManager {
+@Slf4j
+public class KeyManager implements IKeyManager {
 
     private final KeyRepository keyRepository;
     private final long jwtExpirationMs;
@@ -118,7 +121,7 @@ public class KeyManager {
         toDelete.forEach(kid -> {
             keyStore.remove(kid);
             keyRepository.deleteById(kid);
-            System.out.println("[KeyManager] Removed old key: " + kid);
+            log.info("[KeyManager] Removed old key: " + kid);
         });
     }
 

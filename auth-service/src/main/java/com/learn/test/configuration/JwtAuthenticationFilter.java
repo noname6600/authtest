@@ -8,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,6 +25,7 @@ import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final CustomUserDetailsService userDetailsService;
@@ -37,8 +39,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String userId = request.getHeader("X-USER-ID");
         String userEmail = request.getHeader("X-USER-EMAIL");
 
-        System.out.println("[AUTH] X-User-Id = " + userId);
-        System.out.println("[AUTH] X-User-Email = " + userEmail);
+        log.info("[AUTH] X-User-Id = " + userId);
+        log.info("[AUTH] X-User-Email = " + userEmail);
 
         if (userId != null &&
                 userEmail != null &&

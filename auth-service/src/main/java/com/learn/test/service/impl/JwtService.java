@@ -3,6 +3,7 @@ package com.learn.test.service.impl;
 import com.learn.test.entity.User;
 import com.learn.test.module.KeyRecord;
 import com.learn.test.service.IJwtService;
+import com.learn.test.service.IKeyManager;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtService implements IJwtService {
 
-    private final KeyManager keyManager;
+    private final IKeyManager keyManager;
 
 
     @Override

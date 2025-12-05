@@ -25,6 +25,11 @@ public class GatewayConfig {
                         .filters(f -> f.filter(jwtGatewayFilter))
                         .uri("lb://auth-service"))
 
+                .route("account-service", r -> r
+                        .path("/api/v1/accounts/**")
+                        .filters(f -> f.filter(jwtGatewayFilter))
+                        .uri("lb://auth-service"))
+
                 .route("order-service", r -> r
                         .path("/api/v1/orders/**")
                         .filters(f -> f.filter(jwtGatewayFilter))
